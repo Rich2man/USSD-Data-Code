@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>USSD Data Code Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #008000; /* Nigerian Green */
+            color: white;
+        }
+        .navbar {
+            background-color: #006400; /* Dark Green */
+        }
+        .hero {
+            padding: 40px 20px;
+            text-align: center;
+            background: #ffffff;
+            color: #008000;
+            border-radius: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .card {
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: #ffffff;
+            color: #008000;
+        }
+        .btn-custom {
+            background: #008000;
+            color: white;
+            border: none;
+        }
+        .table thead {
+            background-color: #008000;
+            color: white;
+        }
+        #data-section {
+            display: none; /* Initially hide the table section */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">USSD DATA CODE FINDER</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container">
+        <div class="hero section">
+            <h1>Welcome to USSD Data Code Finder</h1>
+            <p>Find the best USSD codes for data plans across all major network providers.</p>
+        </div>
+    </div>
+
+    <!-- Network Selection -->
+    <div class="container">
+        <div class="card section">
+            <h4>Select Network Provider:</h4>
+            <select class="form-select mb-2" id="network" onchange="showTable()">
+                <option value="">Select...</option>
+                <option value="mtn">MTN</option>
+                <option value="airtel">Airtel</option>
+                <option value="glo">Glo</option>
+                <option value="9mobile">9mobile</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Data Plans Display (Initially Hidden) -->
+    <div class="container">
+        <div class="card section" id="data-section">
+            <h4>Available Data Plans:</h4>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const dataPlans = {
+            mtn: [
+                { plan: "500MB (Daily)", price: "₦200", code: "*131*500#" },
+                { plan: "1GB (Daily)", price: "₦300", code: "*131*1#" },
+                { plan: "Social Bundle (WhatsApp/Facebook)", price: "₦100", code: "*131*5#" },
+                { plan: "Night Plan (1GB - Midnight)", price: "₦200", code: "*131*Night#" }
+            ],
+            airtel: [
+                { plan: "1GB (Daily)", price: "₦350", code: "*141*1#" },
+                { plan: "Social Bundle (WhatsApp/Facebook)", price: "₦100", code: "*141*5#" },
+                { plan: "Night Plan (500MB - Midnight)", price: "₦100", code: "*141*Night#" },
+                { plan: "10GB (Monthly)", price: "₦3,500", code: "*141*10#" }
+            ],
+            glo: [
+                { plan: "1GB (Daily)", price: "₦400", code: "*127*1#" },
+                { plan: "Social Bundle (Instagram/Snapchat)", price: "₦200", code: "*127*Social#" },
+                { plan: "Night Plan (2GB - Midnight)", price: "₦500", code: "*127*Night#" },
+                { plan: "30GB (Monthly)", price: "₦10,000", code: "*127*30#" }
+            ],
+            "9mobile": [
+                { plan: "500MB (Daily)", price: "₦200", code: "*229*500#" },
+                { plan: "Social Bundle (TikTok/Twitter)", price: "₦150", code: "*229*Social#" },
+                { plan: "Night Plan (1GB - Midnight)", price: "₦250", code: "*229*Night#" },
+                { plan: "25GB (Monthly)", price: "₦9,500", code: "*229*25#" }
+            ]
+        };
+
+        function showTable() {
+            let network = document.getElementById("network").value;
+            let dataSection = document.getElementById("data-section");
+
+            if (network) {
+                dataSection.style.display = "block"; // Show the table section
+                displayPlans(network);
+            } else {
+                dataSection.style.display = "none"; // Hide the section when no network is selected
+            }
+        }
+
+        function displayPlans(network) {
+            let result = document.getElementById("result");
+            let tableHTML = `
+                <table class="table mt-3 text-center">
+                    <thead><tr><th>Plan</th><th>Price</th><th>USSD Code</th></tr></thead>
+                    <tbody>
+            `;
+            dataPlans[network].forEach(plan => {
+                tableHTML += `<tr><td>${plan.plan}</td><td>${plan.price}</td><td>${plan.code}</td></tr>`;
+            });
+            tableHTML += `</tbody></table>`;
+            result.innerHTML = tableHTML;
+        }
+    </script>
+
+</body>
+</html>
 
