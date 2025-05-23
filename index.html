@@ -53,7 +53,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">USSD DATA CODE FINDER</a>
+            <a class="navbar-brand" href="#">USSD Data Code Finder</a>
         </div>
     </nav>
 
@@ -83,7 +83,18 @@
     <div class="container">
         <div class="card section" id="data-section">
             <h4>Available Data Plans:</h4>
-            <div id="result"></div>
+            <div class="table-responsive">
+                <table class="table mt-3 text-center">
+                    <thead>
+                        <tr>
+                            <th>Plan</th>
+                            <th>Price</th>
+                            <th>USSD Code</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -128,20 +139,20 @@
         }
 
         function displayPlans(network) {
-            let result = document.getElementById("result");
-            let tableHTML = `
-                <table class="table mt-3 text-center">
-                    <thead><tr><th>Plan</th><th>Price</th><th>USSD Code</th></tr></thead>
-                    <tbody>
-            `;
+            let result = document.getElementById("table-body");
+            result.innerHTML = ""; // Clear previous data
+
             dataPlans[network].forEach(plan => {
-                tableHTML += `<tr><td>${plan.plan}</td><td>${plan.price}</td><td>${plan.code}</td></tr>`;
+                result.innerHTML += `
+                    <tr>
+                        <td>${plan.plan}</td>
+                        <td>${plan.price}</td>
+                        <td>${plan.code}</td>
+                    </tr>
+                `;
             });
-            tableHTML += `</tbody></table>`;
-            result.innerHTML = tableHTML;
         }
     </script>
 
 </body>
 </html>
-
